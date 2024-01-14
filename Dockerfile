@@ -6,7 +6,7 @@ ENV PYTHONUNBUFFERED 1
 
 WORKDIR /app
 
-COPY requirements.txt /app/
+COPY requirements_docker.txt /app/
 RUN pip install --upgrade pip
 RUN pip install -r requirements_docker.txt
 
