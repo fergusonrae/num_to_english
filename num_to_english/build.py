@@ -32,8 +32,7 @@ def run_prod():
 
 
 @task()
-def test():
-    """Run tests"""
+def unit_test():
     docker_test = [
         "docker run --rm -it",
         PROJECT_NAME,
