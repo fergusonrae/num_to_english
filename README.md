@@ -15,7 +15,6 @@ pynt commands:
 
 
 ## Features Backlog
-- Logging (log rotation?)
 - Git Hooks
 - Integration Testing
 - Clarify Error Handling
