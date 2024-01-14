@@ -9,6 +9,7 @@ from .utils import convert_number_to_english
     (0.00000000, "zero"),
     (-1.01, "negative one point zero one"),
     (2e3, "two thousand"),
+    (90.08, "ninety point zero eight"), # Make sure spacing is correct
 ])
 def test_convert_number_to_english(input, expected):
     assert convert_number_to_english(input) == expected

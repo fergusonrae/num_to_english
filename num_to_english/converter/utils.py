@@ -44,28 +44,29 @@ def convert_integer_to_english(integer_part: int) -> str:
     remainder = integer_part % 1000
 
     if billion > 0:
-        result.append(convert_less_than_thousand(billion))
+        result.extend(convert_less_than_thousand(billion))
         result.append("billion")
     if million > 0:
-        result.append(convert_less_than_thousand(million))
+        result.extend(convert_less_than_thousand(million))
         result.append("million")
     if thousand > 0:
-        result.append(convert_less_than_thousand(thousand))
+        result.extend(convert_less_than_thousand(thousand))
         result.append("thousand")
     if remainder > 0:
-        result.append(convert_less_than_thousand(remainder))
+        result.extend(convert_less_than_thousand(remainder))
+    print(result)
     return result
 
-def convert_less_than_thousand(num: int) -> str:
+def convert_less_than_thousand(num: int) -> list:
     if num == 0:
-        return ""
+        return []
     if num < 10:
-        return UNITS[num]
+        return [UNITS[num]]
     if num < 20:
-        return TEENS[num - 10]
+        return [TEENS[num - 10]]
     if num < 100:
-        return TENS[num // 10] + " " + convert_less_than_thousand(num % 10)
-    return UNITS[num // 100] + " hundred " + convert_less_than_thousand(num % 100)
+        return [TENS[num // 10]] + convert_less_than_thousand(num % 10)
+    return [UNITS[num // 100], "hundred"] + convert_less_than_thousand(num % 100)
 
 
 def convert_decimal_places(decimal_nums: str) -> list:
