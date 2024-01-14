@@ -44,8 +44,7 @@ def convert_number_to_english(number: Union[int, float]) -> str:
 
     # Convert the decimal_part to English
     if decimal_part and (int(decimal_part) > 0):
-        if not result:
-            result += "zero"
+        result = result if result else "zero"
         result += " point " + convert_decimal_places(decimal_part)
 
     return result.strip()
