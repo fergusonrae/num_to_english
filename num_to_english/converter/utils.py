@@ -27,42 +27,45 @@ def convert_number_to_english(number: Union[int, float]) -> str:
     print(number, integer_part, decimal_part)
 
     # Convert the integer_part to English
-    result = ""
+    result = []
     billion = integer_part // 1000000000
     million = (integer_part % 1000000000) // 1000000
     thousand = (integer_part % 1000000) // 1000
     remainder = integer_part % 1000
 
     if billion > 0:
-        result += convert_less_than_thousand(billion) + " billion "
+        result.append(convert_less_than_thousand(billion))
+        result.append("billion")
     if million > 0:
-        result += convert_less_than_thousand(million) + " million "
+        result.append(convert_less_than_thousand(million))
+        result.append("million")
     if thousand > 0:
-        result += convert_less_than_thousand(thousand) + " thousand "
+        result.append(convert_less_than_thousand(thousand))
+        result.append("thousand")
     if remainder > 0:
-        result += convert_less_than_thousand(remainder)
+        result.append(convert_less_than_thousand(remainder))
 
     # Convert the decimal_part to English
     if decimal_part and (int(decimal_part) > 0):
-        result = result if result else "zero"
-        result += " point " + convert_decimal_places(decimal_part)
+        result = result if result else ["zero"]
+        result.append("point")
+        result.append(convert_decimal_places(decimal_part))
 
-    return result.strip()
+    return " ".join(result)
 
-# Function to convert a number less than 1000 to English
-def convert_less_than_thousand(num):
+
+def convert_less_than_thousand(num: int) -> str:
     if num == 0:
         return ""
-    elif num < 10:
+    if num < 10:
         return UNITS[num]
-    elif num < 20:
+    if num < 20:
         return TEENS[num - 10]
-    elif num < 100:
+    if num < 100:
         return TENS[num // 10] + " " + convert_less_than_thousand(num % 10)
-    else:
-        return UNITS[num // 100] + " hundred " + convert_less_than_thousand(num % 100)
+    return UNITS[num // 100] + " hundred " + convert_less_than_thousand(num % 100)
 
-# Function to convert the fractional part of a float to English
+
 def convert_decimal_places(decimal_nums: str):
     # Does not follow the same logic as numbers before a decimal point
     # Instead, each digit is converted individually
