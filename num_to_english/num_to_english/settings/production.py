@@ -1,8 +1,8 @@
 import os
 from .base import *
 
-SECRET_KEY = os.environ["SECRET_KEY"]
-DEBUG = False
+SECRET_KEY = os.environ["DJANGO_SECRET_KEY"]
+DEBUG = False # SECURITY WARNING: don't run with debug turned on in production!
 ALLOWED_HOSTS = [] # TODO: Add your production host here
 
 # will output to logging file
