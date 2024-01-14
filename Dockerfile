@@ -10,6 +10,4 @@ COPY requirements.txt /app/
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
-COPY ./num_to_english/ /app/
-
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+COPY ./num_to_english /app/
