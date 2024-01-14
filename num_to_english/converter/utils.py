@@ -1,4 +1,7 @@
+import logging
 from typing import Union
+
+logger = logging.getLogger(__name__)
 
 # Define lists for units, tens, and teens
 UNITS = ["", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
@@ -11,6 +14,7 @@ def convert_number_to_english(number: Union[int, float]) -> str:
 
     # special cases
     if 'e' in str(number):
+        logger.info(f"Number {number} is too large or has too many decimal places.")
         raise ValueError("Input number is too large or has too many decimal places.")
     if number == 0:
         return "zero"
@@ -54,7 +58,6 @@ def convert_integer_to_english(integer_part: int) -> str:
         result.append("thousand")
     if remainder > 0:
         result.extend(convert_less_than_thousand(remainder))
-    print(result)
     return result
 
 def convert_less_than_thousand(num: int) -> list:
