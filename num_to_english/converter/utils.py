@@ -5,28 +5,38 @@ UNITS = ["", "one", "two", "three", "four", "five", "six", "seven", "eight", "ni
 TEENS = ["", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"]
 TENS = ["", "ten", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"]
 
+
 def convert_number_to_english(number: Union[int, float]) -> str:
     """Converts a number to its lowercase English representation."""
-    if 'e' in str(number):
-        raise ValueError("Input number has too many decimal places.")
 
-    # Special case for zero
+    # special cases
+    if 'e' in str(number):
+        raise ValueError("Input number is too large or has too many decimal places.")
     if number == 0:
         return "zero"
-
-    # Special case for negative numbers
     if number < 0:
-        return "negative " + convert_number_to_english(abs(number))
+        return f"negative {convert_number_to_english(abs(number))}"
 
     # Split the number into integer and decimal parts
+    # Use string for decimal part to avoid floating point errors
     integer_part = int(number)
-    if '.' in str(number):
-        decimal_part = str(number).split('.')[1]
-    else:
-        decimal_part = None
-    print(number, integer_part, decimal_part)
+    decimal_part = str(number).split('.')[1] if len(str(number).split('.')) > 1 else None
 
     # Convert the integer_part to English
+    result = convert_integer_to_english(integer_part)
+
+    # Convert the decimal_part to English
+    if decimal_part:
+        result = result if result else ["zero"]
+        decimals_as_str = convert_decimal_places(decimal_part)
+        if decimals_as_str:
+            result.append("point")
+            result.extend(decimals_as_str)
+
+    return " ".join(result)
+
+
+def convert_integer_to_english(integer_part: int) -> str:
     result = []
     billion = integer_part // 1000000000
     million = (integer_part % 1000000000) // 1000000
@@ -44,15 +54,7 @@ def convert_number_to_english(number: Union[int, float]) -> str:
         result.append("thousand")
     if remainder > 0:
         result.append(convert_less_than_thousand(remainder))
-
-    # Convert the decimal_part to English
-    if decimal_part and (int(decimal_part) > 0):
-        result = result if result else ["zero"]
-        result.append("point")
-        result.append(convert_decimal_places(decimal_part))
-
-    return " ".join(result)
-
+    return result
 
 def convert_less_than_thousand(num: int) -> str:
     if num == 0:
@@ -66,16 +68,13 @@ def convert_less_than_thousand(num: int) -> str:
     return UNITS[num // 100] + " hundred " + convert_less_than_thousand(num % 100)
 
 
-def convert_decimal_places(decimal_nums: str):
+def convert_decimal_places(decimal_nums: str) -> list:
     # Does not follow the same logic as numbers before a decimal point
     # Instead, each digit is converted individually
-    result = ""
-    print(decimal_nums)
-    for idx, digit in enumerate(decimal_nums):
+    result = []
+    for digit in decimal_nums.rstrip('0'):
         if digit == '0':
-            if int(decimal_nums[idx:]) == 0:
-                break
-            result += "zero "
+            result.append("zero")
         else:
-            result += UNITS[int(digit)] + " "
-    return result.strip()
+            result.append(UNITS[int(digit)])
+    return result
