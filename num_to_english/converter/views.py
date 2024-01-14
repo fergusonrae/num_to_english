@@ -16,10 +16,11 @@ def num_to_english_post(request):
 def num_to_english_return(request_number: str):
     try:
         if not request_number:
-            return JsonResponse({'status': 'error', 'message': 'Number must not be null'})
+            return JsonResponse({'status': 'error', 'message': 'Number must not be null'}, status=400)
         number = float(request_number)
         number_in_english = convert_number_to_english(number)
-        response_data = {'status': 'ok', 'num_in_english': number_in_english}
+        return JsonResponse({'status': 'ok', 'num_in_english': number_in_english}, status=200)
     except ValueError:
-        return JsonResponse({'status': 'error', 'message': 'Invalid number'})
-    return JsonResponse(response_data)
+        return JsonResponse({'status': 'error', 'message': 'Invalid number'}, status=400)
+    except Exception as e:
+        return JsonResponse({'status': 'error', 'message': 'Unexpected Exception'}, status=500)
