@@ -22,13 +22,21 @@ def build():
 @task()
 def run_dev():
     """Run development server"""
-    run_common(DEV_SETTINGS)
+    docker_run_command = [
+        "docker run --rm",
+        f"-e DJANGO_SETTINGS_MODULE={DEV_SETTINGS}",
+        "-p 8000:8000",
+        PROJECT_NAME,
+        f"python manage.py runserver 0.0.0.0:8000",
+    ]
+    run_command(" ".join(docker_run_command))
 
 
 @task()
 def run_prod():
     """Run production server"""
-    run_common(PROD_SETTINGS)
+    # TODO: will require setting up a production server
+    pass
 
 
 @task()
@@ -50,14 +58,3 @@ def run_command(command):
 def get_root_path():
     # TODO: maybe can be fancier?
     return pathlib.Path(__file__).resolve().parent.parent
-
-
-def run_common(settings):
-    docker_run_command = [
-        "docker run --rm",
-        f"-e DJANGO_SETTINGS_MODULE={settings}",
-        "-p 8000:8000",
-        PROJECT_NAME,
-        f"python manage.py runserver 0.0.0.0:8000",
-    ]
-    run_command(" ".join(docker_run_command))
