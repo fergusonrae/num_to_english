@@ -11,3 +11,12 @@ from .utils import convert_number_to_english
 ])
 def test_convert_number_to_english(input, expected):
     assert convert_number_to_english(input) == expected
+
+
+@pytest.mark.parametrize("input, expected_exception", [
+    (1e-9, ValueError),
+    (0.00000001, ValueError),
+])
+def test_convert_number_to_english_raises_error(input, expected_exception):
+    with pytest.raises(expected_exception):
+        convert_number_to_english(input)

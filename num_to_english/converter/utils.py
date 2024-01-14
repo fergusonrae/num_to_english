@@ -20,6 +20,8 @@ def convert_number_to_english(number: Union[int, float]) -> str:
     integer_part = int(number)
     if '.' in str(number):
         decimal_part = str(number).split('.')[1]
+    elif 'e' in str(number):
+        raise ValueError("Input number has too many decimal places.")
     else:
         decimal_part = None
     print(number, integer_part, decimal_part)
