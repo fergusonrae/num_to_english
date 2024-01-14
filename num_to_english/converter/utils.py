@@ -7,6 +7,8 @@ TENS = ["", "ten", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "ei
 
 def convert_number_to_english(number: Union[int, float]) -> str:
     """Converts a number to its lowercase English representation."""
+    if 'e' in str(number):
+        raise ValueError("Input number has too many decimal places.")
 
     # Special case for zero
     if number == 0:
@@ -20,8 +22,6 @@ def convert_number_to_english(number: Union[int, float]) -> str:
     integer_part = int(number)
     if '.' in str(number):
         decimal_part = str(number).split('.')[1]
-    elif 'e' in str(number):
-        raise ValueError("Input number has too many decimal places.")
     else:
         decimal_part = None
     print(number, integer_part, decimal_part)
@@ -43,7 +43,7 @@ def convert_number_to_english(number: Union[int, float]) -> str:
         result += convert_less_than_thousand(remainder)
 
     # Convert the decimal_part to English
-    if decimal_part:
+    if decimal_part and (int(decimal_part) > 0):
         if not result:
             result += "zero"
         result += " point " + convert_decimal_places(decimal_part)
