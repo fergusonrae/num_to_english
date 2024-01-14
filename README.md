@@ -3,7 +3,7 @@ Django app to convert numbers to string English representations
 
 
 ## To Run
-Easiest way to build and run the project is using pynt. To install, do `pip install pynt` in your local environment.
+Easiest way to build and run the project is using pynt. To install, do `pip install -r requirements_user.txt` in your local environment.
 
 To use pynt commands, navigate to the directory with build.py (`cd <PROJECT_ROOT>/num_to_english`).
 

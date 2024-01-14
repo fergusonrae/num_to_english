@@ -1,3 +1,2 @@
 Django==4.2.9
-pynt==0.8.2
 pytest
