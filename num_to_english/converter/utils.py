@@ -12,9 +12,17 @@ def convert_number_to_english(number: Union[int, float]) -> str:
     if number == 0:
         return "zero"
 
+    # Special case for negative numbers
+    if number < 0:
+        return "negative " + convert_number_to_english(abs(number))
+
     # Split the number into integer and decimal parts
     integer_part = int(number)
-    decimal_part = number - integer_part
+    if '.' in str(number):
+        decimal_part = str(number).split('.')[1]
+    else:
+        decimal_part = None
+    print(number, integer_part, decimal_part)
 
     # Convert the integer_part to English
     result = ""
@@ -33,7 +41,7 @@ def convert_number_to_english(number: Union[int, float]) -> str:
         result += convert_less_than_thousand(remainder)
 
     # Convert the decimal_part to English
-    if decimal_part > 0:
+    if decimal_part:
         if not result:
             result += "zero"
         result += " point " + convert_decimal_places(decimal_part)
@@ -54,10 +62,16 @@ def convert_less_than_thousand(num):
         return UNITS[num // 100] + " hundred " + convert_less_than_thousand(num % 100)
 
 # Function to convert the fractional part of a float to English
-def convert_decimal_places(decimal_places):
+def convert_decimal_places(decimal_nums: str):
     # Does not follow the same logic as numbers before a decimal point
     # Instead, each digit is converted individually
     result = ""
-    for digit in str(decimal_places).split('.')[1]:
-        result += UNITS[int(digit)] + " "
+    print(decimal_nums)
+    for idx, digit in enumerate(decimal_nums):
+        if digit == '0':
+            if int(decimal_nums[idx:]) == 0:
+                break
+            result += "zero "
+        else:
+            result += UNITS[int(digit)] + " "
     return result.strip()
