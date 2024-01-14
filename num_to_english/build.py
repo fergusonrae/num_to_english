@@ -34,8 +34,12 @@ def run_prod():
 @task()
 def test():
     """Run tests"""
-    # docker run --rm -it -v $(PWD):/app -w /app $(PROJECT_NAME) python manage.py test
-    pass
+    docker_test = [
+        "docker run --rm -it",
+        PROJECT_NAME,
+        "pytest",
+    ]
+    run_command(" ".join(docker_test))
 
 
 def run_command(command):
@@ -46,7 +50,7 @@ def run_command(command):
 
 def get_root_path():
     # TODO: maybe can be fancier?
-    return pathlib.Path(__file__).parent.parent.resolve()
+    return pathlib.Path(__file__).resolve().parent.parent
 
 
 def run_common(settings):
