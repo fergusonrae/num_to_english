@@ -1,7 +1,8 @@
 from django.test import TestCase
 from parameterized import parameterized
 import pytest
-from .utils import convert_number_to_english
+from ..utils import convert_number_to_english
+
 
 class TestUtils(TestCase):
     @parameterized.expand([
