@@ -3,7 +3,7 @@ from .base import *
 
 SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
 DEBUG = True
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['0.0.0.0']
 
 
 
