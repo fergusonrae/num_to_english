@@ -1,6 +1,6 @@
 import os
-from scripts.config import PROJECT_NAME
-from scripts.utils import run_command, get_root_path
+from config import PROJECT_NAME
+from utils import run_command, get_root_path
 
 
 os.chdir(get_root_path())

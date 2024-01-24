@@ -1,6 +1,6 @@
 import os
-from scripts.config import DEV_SETTINGS, PROJECT_NAME
-from scripts.utils import run_command
+from config import DEV_SETTINGS, PROJECT_NAME
+from utils import run_command
 
 docker_run_command = [
     "docker run --rm -it",

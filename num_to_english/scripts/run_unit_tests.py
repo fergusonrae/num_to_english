@@ -1,6 +1,6 @@
 import os
-from scripts.config import PROJECT_NAME
-from scripts.utils import run_command
+from config import PROJECT_NAME
+from utils import run_command
 
 # TODO: create separate test settings
 docker_test = [
