@@ -5,18 +5,14 @@ Django app to convert numbers to string English representations
 ## To Run
 
 ### Setup for Development
-1. Easiest way to build and run the project is using pynt. To install, do `pip install -r requirements_user.txt` in your local environment. To use pynt commands, navigate to the directory with build.py (`cd <PROJECT_ROOT>/num_to_english`).
-2. Generate a Django secret key and set your local environment.
-    1. Run `pynt build && pynt generate_secret_key`
-    2. Copy the secret key
-    3. `export DJANGO_SECRET_KEY='<secret_key>'` with quotations in terminal or set in bashrc/zshrc.
+Generate a Django secret key and set your local environment.
+1. Run `python num_to_english/scripts/create_dev_django_secret_key.py`
+2. Copy the secret key
+3. Run `export DJANGO_SECRET_KEY='<PASTE_SECRET_KEY>'` with quotations in terminal or set in bashrc/zshrc.
 
 ### Run Steps
-pynt commands:
-- `pynt build`: Build the project Docker image. To capture newest code changes, run this command before any others
-- `pynt run_dev`: Use Docker to run the Django server using dev settings
-- `pynt run_prod`: Use Docker to run the Django server using prod settings (not currently supported)
-- `pynt unit_test`: Use Docker to run the project unit tests
+- Run unit tests: `python num_to_english/scripts/build.py && python num_to_english/scripts/run_unit_tests.py`
+- Run dev server: `python num_to_english/scripts/build.py && python num_to_english/scripts/run_dev.py`
 
 
 ## Features Backlog
