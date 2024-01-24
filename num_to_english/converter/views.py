@@ -1,27 +1,25 @@
 import logging
 from django.http import JsonResponse
-from django.views.decorators.http import require_GET, require_POST
+from django.views.decorators.http import require_http_methods
 from .utils import convert_number_to_english
 
 logger = logging.getLogger(__name__)
 
 
-@require_GET
-def num_to_english_get(request):
-    return num_to_english_return(request.GET.get('number'))
+# As app scales up in users, consider removing logging results from view
+# to avoid performance issues
+@require_http_methods(["GET", "POST"])
+def num_to_english(request):
+    if request.method == 'GET':
+        request_number = request.GET.get('number')
+    elif request.method == 'POST':
+        request_number = request.POST.get('number')
 
+    if not request_number:
+        logger.info("Null number argument passed to num_to_english")
+        return JsonResponse({'status': 'error', 'message': 'Number must not be null'}, status=400)
 
-@require_POST
-def num_to_english_post(request):
-    return num_to_english_return(request.POST.get('number'))
-
-
-# As app scales up in users, consider removing logging results from view to avoid performance issues
-def num_to_english_return(request_number: str):
     try:
-        if not request_number:
-            logger.info("Null number argument passed to num_to_english")
-            return JsonResponse({'status': 'error', 'message': 'Number must not be null'}, status=400)
         number = float(request_number)
         number_in_english = convert_number_to_english(number)
         logger.info("View executed successfully. Result: %s", number_in_english)
