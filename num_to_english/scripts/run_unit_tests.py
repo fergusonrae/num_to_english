@@ -8,6 +8,6 @@ docker_test = [
     "-e DJANGO_SETTINGS_MODULE=num_to_english.settings.development",
     f"-e DJANGO_SECRET_KEY='{os.environ['DJANGO_SECRET_KEY']}'",
     PROJECT_NAME,
-    "pytest",
+    "python manage.py test",
 ]
 run_command(" ".join(docker_test))
